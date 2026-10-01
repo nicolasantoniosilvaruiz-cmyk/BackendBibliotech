@@ -1,0 +1,31 @@
+{% extends 'biblioteca/base.html' %}
+{% block content %}
+<h2>Catálogo de Libros</h2>
+<div class="mb-3">
+    <span>Filtrar: </span>
+    <a href="{% url 'lista_libros' %}" class="btn btn-sm btn-outline-secondary">Todos</a>
+    <a href="{% url 'libros_por_categoria' 'TECNOLOGIA' %}" class="btn btn-sm btn-outline-primary">Tecnología</a>
+    <a href="{% url 'libros_por_categoria' 'NARRATIVA' %}" class="btn btn-sm btn-outline-primary">Narrativa</a>
+    <a href="{% url 'libros_por_categoria' 'CIENCIA' %}" class="btn btn-sm btn-outline-primary">Ciencia</a>
+</div>
+<table class="table table-striped table-hover bg-white rounded shadow-sm">
+    <thead>
+        <tr>
+            <th>ISBN</th><th>Título</th><th>Autor</th><th>Categoría</th><th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro.isbn }}</td>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.get_categoria_display }}</td>
+            <td><a href="{% url 'detalle_libro' libro.id %}" class="btn btn-sm btn-info text-white">Ver detalle</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No hay libros registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
